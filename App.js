@@ -1,69 +1,115 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, SafeAreaView, View, FlatList } from "react-native";
-import { db, collection, getDocs, addDoc } from "./Config";
-import ToDoItem from "./components/ToDoItem";
-import Input from "./components/Input";
+import { View, Text, Image, StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from "./screens/HomeScreen";
+import ChartScreen from "./screens/ChartScreen";
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider } from '@ui-kitten/components';
 
-export default function App() {
-  const [todos, setToDos] = useState([]);
-  const [newItem, setNewItem] = useState("");
 
-  // get todo list
-  const getToDos = async () => {
-    const todosCol = collection(db, "ToDos");
-    const todosSnapshot = await getDocs(todosCol);
-    setToDos(todosSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  };
-
-  // add new item
-  const addToDo = async () => {
-    try {
-      const docRef = await addDoc(collection(db, "ToDos"), {
-        title: newItem,
-        isChecked: false,
-      });
-      getToDos();
-      setNewItem("");
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };
-
-  useEffect(() => {
-    getToDos();
-  }, []);
-
+const HeaderComp = ()=>{
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.topContainer}>
-        <FlatList
-          data={todos}
-          renderItem={({ item }) => (
-            <ToDoItem
-              title={item.title}
-              isChecked={item.isChecked}
-              id={item.id}
-              refetch={getToDos}
-            />
-          )}
-        />
+    <View style={styles.header}>
+      <View style={styles.left}>
+         <Image style={[{ width: 50, height: 50, borderRadius: 200 }, styles.image]}  source={require("./assets/dougie.jpeg")} />
+         <View style={styles.leftTextContainer}>
+          <Text style={styles.greeting}>Hi Douglas</Text>
+          <Text style={styles.title}>Monthly Budget</Text>
+         </View>
+
       </View>
 
-      <Input
-        value={newItem}
-        onChange={(text) => setNewItem(text)}
-        submit={addToDo}
-      />
-    </SafeAreaView>
+      <View style={styles.right}>
+        <View>
+        <View style={styles.pill}>
+          <Text style={styles.LogoText}>MashBudget</Text>
+        </View>
+        </View>
+        
+      </View>
+    </View>
+  )
+}
+
+
+
+export default function App() {
+const Stack = createNativeStackNavigator();
+  return (
+    <ApplicationProvider  {...eva} theme={eva.dark}>
+
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} options={{
+          title: "Welcome",
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontSize: 20
+          },
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: "#1f1f1f"
+          },
+          headerTitle: (props) => <HeaderComp/>
+          
+        }
+        }/>
+
+
+        <Stack.Screen name="Chart" component={ChartScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+    </ApplicationProvider>
+
   );
 }
 
+
 const styles = StyleSheet.create({
-  container: {
+  header: {
     flex: 1,
-    backgroundColor: "#fff",
+    flexDirection: "row"
   },
-  topContainer: {
+  left: {
     flex: 1,
+    flexDirection: "row",
+    alignItems: "center"
   },
-});
+  leftTextContainer: {
+    flex: 1,
+    flexDirection: "column",
+    width: "80%",
+    // backgroundColor: "white"
+  },
+  greeting: {
+    // fontSize: 12,
+    color: "white"
+  },
+  title: {
+    // fontSize: 15,
+    color: "white"
+
+  },
+  image: {
+    marginRight: 10
+  },
+  right: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row"
+
+  },
+  pill: {
+    backgroundColor: "#242424",
+    borderColor: "#2b2d2d",
+    borderRadius: 200,
+    paddingHorizontal: 10,
+    paddingVertical: 5
+  },
+  LogoText: {
+    color: "white",
+    fontSize: 18
+  }
+})
