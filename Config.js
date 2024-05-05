@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {
-  getFirestore,
+  initializeFirestore,
   collection,
   getDocs,
   addDoc,
@@ -10,7 +10,11 @@ import {
   updateDoc,
   query,
   where,
+  setDoc,
+  getDoc,
+  orderBy
 } from "firebase/firestore";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCe1ySGiZHNP2yuGh9Smvq0uAA078CaIP8",
@@ -22,18 +26,21 @@ const firebaseConfig = {
   appId: "1:921826051079:web:3ef3e0cc303e48ca9e16a2",
   measurementId: "G-3N76PSFRMF"
 };
-const app = initializeApp(firebaseConfig, { experimentalForceLongPolling: true });
-const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db = initializeFirestore(app, { experimentalAutoDetectLongPolling: true, });
 
 export {
   db,
   collection,
-  getDocs,
+  getDoc,
   addDoc,
   onSnapshot,
   doc,
   deleteDoc,
+  getDocs,
   updateDoc,
   query,
   where,
+  setDoc,
+  orderBy
 };
