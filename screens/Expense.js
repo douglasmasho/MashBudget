@@ -17,6 +17,7 @@ import {
   query,
 } from "../Config";
 import LottieView from "lottie-react-native";
+import ExpenseItem from "../components/ExpenseItem";
 
 //this code handles the formatting of the money so it displays with commas and 2 decimal places
 const { FormatMoney } = require('format-money-js');
@@ -25,7 +26,7 @@ const fm = new FormatMoney({
 });
 
 
-const Expense = () => {
+const Expense = (props) => {
    //this stores the value of expenses, the loading state, the total expenses
    const [expenses, setExpenses] = useState([]);
    const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +43,7 @@ const Expense = () => {
    const getItems = async () => {
      try {
        //the query specifies the specific document we want to get from our database, in this case we want the document with all the expenses
-       const q = query(collection(db, "income"), orderBy("time", "desc"));
+       const q = query(collection(db, "expense"), orderBy("time", "desc"));
        //the select method will then fetch the document specified by the query
        SELECT(q, (querySnapshot) => {
        setIsLoading(false);
@@ -60,9 +61,9 @@ const Expense = () => {
      }
    };
  
-   //this method gets the total income figure from the database and then displays it on the screen
+   //this method gets the total expense figure from the database and then displays it on the screen
    const getTotal = async ()=>{
-     await SELECT(doc(db, "totalIncome", "total"), (doc)=>{
+     await SELECT(doc(db, "totalExpense", "total"), (doc)=>{
        setTotal(doc.data()?.total)
      })
    }
@@ -85,7 +86,6 @@ const Expense = () => {
                width: 200,
                height: 200,
              }}
-             // Find more Lottie files at https://lottiefiles.com/featured
              source={require("../assets/loading.json")}
            />
          </View>:
@@ -94,20 +94,20 @@ const Expense = () => {
          <Text style={styles.headerAmount}>Total: {fm.from(total, { symbol: 'N$' })}</Text>
          <Button
            style={styles.button}
-           onPress={() => props.navigation.navigate("AddIncome")}
+           onPress={() => props.navigation.navigate("AddExpense")}
          >
-           Add Income
+           Add Expense
          </Button>
        </View>
        <ScrollView>
-         {expenses.map((income) => (
-           <Incomeitem
-             key={income.id}
-             id={income.id}
-             name={income.name}
-             description={income.description}
-             amount={income.amount}
-             time={income.time}
+         {expenses.map((expense) => (
+           <ExpenseItem
+             key={expense.id}
+             id={expense.id}
+             name={expense.name}
+             description={expense.description}
+             amount={expense.amount}
+             time={expense.time}
              navigation={props.navigation}
            />
          ))}

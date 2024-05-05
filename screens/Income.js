@@ -89,7 +89,6 @@ const Income = (props) => {
               width: 200,
               height: 200,
             }}
-            // Find more Lottie files at https://lottiefiles.com/featured
             source={require("../assets/loading.json")}
           />
         </View>:

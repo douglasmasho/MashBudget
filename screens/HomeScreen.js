@@ -1,28 +1,30 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { SafeAreaView , StyleSheet, View} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { TabBar, Tab, Layout, Text, Button } from '@ui-kitten/components';
+import { TabBar, Tab, Layout, Text, Button, Icon } from '@ui-kitten/components';
 import Income from './Income';
 import Expense from './Expense';
 import BottomPopup from '../components/BottomPopup';
+import {
+  db,
+  doc,
+  orderBy,
+  collection,
+  onSnapshot as SELECT,
+  query,
+} from "../Config";
+import LottieView from "lottie-react-native";
+//this code handles the formatting of the money so it displays with commas and 2 decimal places
+const { FormatMoney } = require('format-money-js');
+const fm = new FormatMoney({
+  decimals: 2
+});
 const { Navigator, Screen } = createMaterialTopTabNavigator();
-
-const UsersScreen = () => (
-    <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text category='h1'>USERS</Text>
-    </Layout>
-  );
-  
-  const OrdersScreen = () => (
-    <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text category='h1'>ORDERS</Text>
-    </Layout>
-  );
-
 
   const TopTabBar = ({ navigation, state }) => (
     <TabBar
+    indicatorStyle={styles.tabColor}
       selectedIndex={state.index}
       onSelect={index => navigation.navigate(state.routeNames[index])} style={styles.tabBg}>
       <Tab title='Incomes' style={styles.tabColor}/>
@@ -40,29 +42,39 @@ const UsersScreen = () => (
 
 
 const HomeScreen = (props) => {
-  const popupRef = useRef(null);
-  const [show, setShow] = useState(false);
-  const [details, setDetails] = useState("");
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpense, setTotalExpense] = useState(0);
+  useEffect(()=>{
 
+  },[])
 
-  const openPopUp = (details)=>{
-    setDetails(details);
-    setShow(true)
-    console.log("pressed")
+   //this method gets the total income figure from the database and then displays it on the screen
+   const getTotalIncome = async ()=>{
+    await SELECT(doc(db, "totalIncome", "total"), (doc)=>{
+      setTotalIncome(doc.data()?.total)
+    })
   }
 
-  const closePopup = ()=>{
-    setShow(false)
-  }
+     //this method gets the total expense figure from the database and then displays it on the screen
+     const getTotalExpense = async ()=>{
+      await SELECT(doc(db, "totalExpense", "total"), (doc)=>{
+        setTotalExpense(doc.data()?.total)
+      })
+    }
+
+    useEffect(()=>{
+      getTotalIncome();
+      getTotalExpense();
+    }, [])
+
     return (
        <SafeAreaView style={styles.container}>
         <View style={styles.middle}>
            <Text>Your Net Income</Text>
-            <Text style={styles.headerAmount}>N$ 12, 000</Text>
-            {/* <Button onPress={openPopUp}>Open Popup</Button> */}
+            <Text style={styles.headerAmount}>{fm.from(totalIncome - totalExpense, { symbol: 'N$' })}</Text>
         </View>
          <TabNavigator/>
-         <BottomPopup show={show} close={closePopup} onTouchOutside={closePopup} details={details}/>
+
         </SafeAreaView>
 
     );

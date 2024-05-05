@@ -1,7 +1,7 @@
 import React from "react";
 import { ProgressBarAndroidComponent, ScrollView, StyleSheet, Text, View } from "react-native";
 
-const DetailsIncome = (props) => {
+const DetailsExpense = (props) => {
     const {name, description, time, amount} = props.route.params
     // console.log(props.route.params)
   return (
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DetailsIncome;
+export default DetailsExpense;

@@ -15,7 +15,7 @@ import {
 import uuid from "react-native-uuid";
 import LottieView from "lottie-react-native";
 
-const AddIncome = (props) => {
+const AddExpense = (props) => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
@@ -31,17 +31,17 @@ const AddIncome = (props) => {
     setIsLoading(true);
     try {
       const id = uuid.v4();
-      await INSERT(doc(db, "income", id), {
+      await INSERT(doc(db, "expense", id), {
         name,
         amount,
         description,
         time: Date.now(),
         id,
       });
-      const docSnap = await SELECT(doc(db, "totalIncome", "total"));
+      const docSnap = await SELECT(doc(db, "totalExpense", "total"));
 
       if (docSnap.exists()) {
-        await INSERT(doc(db, "totalIncome", "total"), {
+        await INSERT(doc(db, "totalExpense", "total"), {
           total: docSnap.data().total + parseFloat(amount),
         });
       } else {
@@ -74,7 +74,7 @@ const AddIncome = (props) => {
         <>
           <Text style={styles.label}>Name</Text>
           <TextInput
-            placeholder="Enter your income name"
+            placeholder="Enter your expense name"
             value={name}
             style={styles.input}
             placeholderTextColor={"white"}
@@ -83,7 +83,7 @@ const AddIncome = (props) => {
           <Text style={styles.label}>Amount</Text>
           <TextInput
             keyboardType="numeric"
-            placeholder="Enter your income amount (N$)"
+            placeholder="Enter your expense amount (N$)"
             value={amount}
             style={styles.input}
             placeholderTextColor={"white"}
@@ -93,7 +93,7 @@ const AddIncome = (props) => {
           <Text style={styles.label}>Description</Text>
 
           <TextInput
-            placeholder="Enter your income description"
+            placeholder="Enter your expense description"
             value={description}
             style={styles.input}
             multiline={true}
@@ -102,7 +102,7 @@ const AddIncome = (props) => {
             onChangeText={(nextValue) => setDescription(nextValue)}
           />
           <Button style={styles.button} onPress={addItem}>
-            Add Income
+            Add expense
           </Button>
         </>
       )}
@@ -147,4 +147,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddIncome;
+export default AddExpense;

@@ -10,6 +10,9 @@ import AddIncome from "./screens/AddIncome";
 import { MenuProvider } from "react-native-popup-menu";
 import DetailsIncome from "./screens/DetailsIncome";
 import EditIncome from "./screens/EditIncome";
+import AddExpense from "./screens/AddExpense";
+import DetailsExpense from "./screens/DetailsExpense";
+import EditExpense from "./screens/EditExpense";
 
 const HeaderComp = () => {
   return (
@@ -77,6 +80,21 @@ export default function App() {
             }}
           />
           <Stack.Screen
+            name="AddExpense"
+            component={AddExpense}
+            options={{
+              title: "Add Expense",
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontSize: 25,
+              },
+              headerShadowVisible: false,
+              headerStyle: {
+                backgroundColor: "#1f1f1f",
+              },
+            }}
+          />
+          <Stack.Screen
             name="DetailsIncome"
             component={DetailsIncome}
             options={{
@@ -92,10 +110,40 @@ export default function App() {
             }}
           />
           <Stack.Screen
+            name="DetailsExpense"
+            component={DetailsExpense}
+            options={{
+              title: "Expense Details",
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontSize: 25,
+              },
+              headerShadowVisible: false,
+              headerStyle: {
+                backgroundColor: "#1f1f1f",
+              },
+            }}
+          />
+          <Stack.Screen
             name="EditIncome"
             component={EditIncome}
             options={{
               title: "Edit Income",
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontSize: 25,
+              },
+              headerShadowVisible: false,
+              headerStyle: {
+                backgroundColor: "#1f1f1f",
+              },
+            }}
+          />
+          <Stack.Screen
+            name="EditExpense"
+            component={EditExpense}
+            options={{
+              title: "Edit Expense",
               headerTintColor: "#fff",
               headerTitleStyle: {
                 fontSize: 25,
