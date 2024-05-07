@@ -131,20 +131,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#1a1a1a",
     paddingHorizontal: 10,
     paddingVertical: 8,
+    fontFamily: "PRegular"
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 20,
+    fontFamily: "PRegular"
   },
   headerAmount: {
     fontSize: 22,
     fontWeight: 600,
     color: "#66B6FF",
+    fontFamily: "PRegular"
   },
   button: {
     borderRadius: 30,
+    fontFamily: "PRegular"
+
   },
   animationContainer: {
     alignItems: "center",

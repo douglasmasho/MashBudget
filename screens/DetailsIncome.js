@@ -21,50 +21,59 @@ const DetailsIncome = (props) => {
 };
 
 const styles = StyleSheet.create({
-    row: {
-        display: "flex",
-        // flexDirection: "row",
-        // alignItems: "flex-end"
-    },
-  headerAmount: {
-    fontSize: 30,
-    color: "#66B6FF",
-    marginRight: 10
-  },
-  middle: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: "#1f1f1f",
-  },
-  date: {
-    color: "white",
-    fontSize: 16,
-    marginBottom: 10,
-    textTransform: "capitalize"
-    
-  },
-  amount: {
-    color: "white",
-    fontSize: 20,
-    marginBottom: 5
-  },
-  detailsHeader: {
-    color: "white",
-    fontSize: 18,
-    marginBottom: 10
-  },
-  detailsView: {
-    backgroundColor: "#2e2e2e",
-    borderRadius: 20,
-    paddingHorizontal: 8,
-    paddingVertical: 10
-  },
-  details: {
-    color: "white",
-    fontSize: 16,
-    textAlign: "justify"
-  }
+  row: {
+    display: "flex",
+    // flexDirection: "row",
+    // alignItems: "flex-end"
+},
+headerAmount: {
+fontSize: 30,
+color: "#66B6FF",
+marginRight: 10,
+fontFamily: "PBold"
+},
+middle: {
+flex: 1,
+paddingHorizontal: 20,
+paddingVertical: 10,
+backgroundColor: "#1f1f1f",
+fontFamily: "PRegular"
+},
+date: {
+color: "white",
+fontSize: 14,
+marginBottom: 10,
+textTransform: "capitalize",
+fontFamily: "PRegular"
+
+},
+amount: {
+color: "white",
+fontSize: 20,
+marginBottom: 5,
+fontFamily: "PRegular"
+
+},
+detailsHeader: {
+color: "white",
+fontSize: 18,
+marginBottom: 10,
+fontFamily: "PRegular"
+
+},
+detailsView: {
+backgroundColor: "#2e2e2e",
+borderRadius: 20,
+paddingHorizontal: 8,
+paddingVertical: 10
+},
+details: {
+color: "white",
+fontSize: 16,
+textAlign: "justify",
+fontFamily: "PRegular"
+
+}
 });
 
 export default DetailsIncome;

@@ -139,6 +139,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 600,
     color: "#66B6FF",
+    fontFamily: "PRegular"
+
   },
   button: {
     borderRadius: 30,

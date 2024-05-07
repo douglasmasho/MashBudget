@@ -29,30 +29,37 @@ const styles = StyleSheet.create({
   headerAmount: {
     fontSize: 30,
     color: "#66B6FF",
-    marginRight: 10
+    marginRight: 10,
+    fontFamily: "PBold"
   },
   middle: {
     flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: "#1f1f1f",
+    fontFamily: "PRegular"
   },
   date: {
     color: "white",
-    fontSize: 16,
+    fontSize: 14,
     marginBottom: 10,
-    textTransform: "capitalize"
+    textTransform: "capitalize",
+    fontFamily: "PRegular"
     
   },
   amount: {
     color: "white",
     fontSize: 20,
-    marginBottom: 5
+    marginBottom: 5,
+    fontFamily: "PRegular"
+
   },
   detailsHeader: {
     color: "white",
     fontSize: 18,
-    marginBottom: 10
+    marginBottom: 10,
+    fontFamily: "PRegular"
+
   },
   detailsView: {
     backgroundColor: "#2e2e2e",
@@ -63,7 +70,9 @@ const styles = StyleSheet.create({
   details: {
     color: "white",
     fontSize: 16,
-    textAlign: "justify"
+    textAlign: "justify",
+    fontFamily: "PRegular"
+
   }
 });
 

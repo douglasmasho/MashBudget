@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#66B6FF",
     marginBottom: 20,
+    fontFamily: "PRegular"
   },
   divider2: {
     marginTop: 10,
@@ -164,6 +165,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 20,
+    fontFamily: "PRegular"
   },
   incomeItem: {
     // backgroundColor: "green",
@@ -176,23 +178,28 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     width: "100%",
+    fontFamily: "PRegular"
   },
   details: {
     flexDirection: "column",
     justifyContent: "center",
+    fontFamily: "PRegular"
   },
   detailsName: {
     fontSize: 20,
     fontWeight: "600",
+    fontFamily: "PRegular"
   },
   detailsTime: {
     fontSize: 12,
     fontWeight: 400,
+    fontFamily: "PRegular"
     // color:
   },
   amount: {
     // color: "#A1DF8B",
     fontSize: 18,
+    fontFamily: "PRegular"
   },
   divider: {
     backgroundColor: "#1e1e1e",

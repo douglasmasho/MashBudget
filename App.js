@@ -13,6 +13,8 @@ import EditIncome from "./screens/EditIncome";
 import AddExpense from "./screens/AddExpense";
 import DetailsExpense from "./screens/DetailsExpense";
 import EditExpense from "./screens/EditExpense";
+import {useFonts} from "expo-font";
+
 
 const HeaderComp = () => {
   return (
@@ -40,8 +42,17 @@ const HeaderComp = () => {
 };
 
 export default function App() {
+  const [isLoaded] = useFonts({
+    PRegular: require("./assets/fonts/PRegular.ttf"),
+    PBold: require("./assets/fonts/PBold.ttf")
+  });
+
+
   const popupRef = useRef(null);
   const Stack = createNativeStackNavigator();
+  if(!isLoaded){
+    return null;
+  }
   return (
     <ApplicationProvider {...eva} theme={eva.dark}>
       <NavigationContainer>
@@ -179,10 +190,12 @@ const styles = StyleSheet.create({
   greeting: {
     // fontSize: 12,
     color: "white",
+    fontFamily: "PBold"
   },
   title: {
     // fontSize: 15,
     color: "white",
+    fontFamily: "PRegular"
   },
   image: {
     marginRight: 10,
@@ -199,9 +212,11 @@ const styles = StyleSheet.create({
     borderRadius: 200,
     paddingHorizontal: 10,
     paddingVertical: 5,
+    fontFamily: "PBold"
   },
   LogoText: {
     color: "white",
     fontSize: 18,
+    fontFamily: "PBold"
   },
 });
