@@ -15,17 +15,17 @@ import {
   query,
 } from "../Config";
 import LottieView from "lottie-react-native";
-import { BarChart, LineChart, PieChart, PopulationPyramid } from "react-native-gifted-charts";
+import MyPieChart from "../components/MyPieChart";
+// import { BarChart, LineChart, PieChart, PopulationPyramid } from "react-native-gifted-charts";
 
-
-const data=[ {
-  value: 47,
-  color: '#009FFF',
-  gradientCenterColor: '#006DFF',
-},
-{value: 10, color: '#93FCF8', gradientCenterColor: '#3BE9DE'},
-{value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3'},
-{value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'}, ]
+// const data=[ {
+//   value: 47,
+//   color: '#009FFF',
+//   gradientCenterColor: '#006DFF',
+// },
+// {value: 10, color: '#93FCF8', gradientCenterColor: '#3BE9DE'},
+// {value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3'},
+// {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'}, ]
 
 const chartConfig = {
   backgroundGradientFrom: "#1E2923",
@@ -90,8 +90,8 @@ const HomeScreen = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.middle}>
-      <PieChart  donut focusOnPress innerCircleColor="#1f1f1f" radius={70} data={data} />
-
+      {/* <PieChart  donut focusOnPress innerCircleColor="#1f1f1f" radius={70} data={data} /> */}
+       <MyPieChart/>
         <View style={styles.inner}>
           <Text>Your Balance</Text>
           <Text style={styles.headerAmount}>
