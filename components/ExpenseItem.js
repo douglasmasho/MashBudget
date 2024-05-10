@@ -105,8 +105,8 @@ const ExpenseItem = ({ name, amount, description, time, navigation, id }) => {
                 })
               }
             >
-              <View>
-                <Divider style={styles.divider2} />
+              <View style={styles.option}>
+                {/* <Divider style={styles.divider2} /> */}
                 <Text style={styles.text}>View Details</Text>
               </View>
             </TouchableOpacity>
@@ -120,16 +120,16 @@ const ExpenseItem = ({ name, amount, description, time, navigation, id }) => {
                 })
               }
             >
-              <View>
-                <Divider style={styles.divider2} />
+              <View style={styles.option}>
+                
                 <Text style={styles.text}>Edit</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={deleteExpense}>
-              <View>
-                <Divider style={styles.divider2} />
+              <View style={styles.option}>
+                
                 <Text style={[styles.text, styles.redText]}>Delete</Text>
-                <Divider style={styles.divider2} />
+                
               </View>
             </TouchableOpacity>
           </View>
@@ -168,17 +168,17 @@ const styles = StyleSheet.create({
     fontFamily: "PRegular"
   },
   expenseItem: {
-    // backgroundColor: "green",
-    borderRadius: 20,
-    paddingHorizontal: 2,
-    paddingVertical: 5,
-    marginBottom: 10,
+       paddingHorizontal: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     flex: 1,
     width: "100%",
-    fontFamily: "PRegular"
+    fontFamily: "PRegular",
+    paddingVertical: 20,
+    marginBottom: 10,
+    backgroundColor: "#1f1f1f",
+    borderRadius: 20,
 
   },
   details: {
@@ -219,6 +219,18 @@ const styles = StyleSheet.create({
     flex: 0,
     backgroundColor: "#1f1f1f",
   },
+  option: {
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    paddingVertical: 20,
+    marginBottom: 10,
+    color: "white",
+    backgroundColor: "#1a1a1a",
+    borderRadius: 20,
+  }
 });
 
 export default ExpenseItem;

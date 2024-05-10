@@ -13,8 +13,9 @@ import EditIncome from "./screens/EditIncome";
 import AddExpense from "./screens/AddExpense";
 import DetailsExpense from "./screens/DetailsExpense";
 import EditExpense from "./screens/EditExpense";
-import {useFonts} from "expo-font";
-
+import { useFonts } from "expo-font";
+import DonutChartContainer from "./screens/DonutChartScreen";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const HeaderComp = () => {
   return (
@@ -44,130 +45,145 @@ const HeaderComp = () => {
 export default function App() {
   const [isLoaded] = useFonts({
     PRegular: require("./assets/fonts/PRegular.ttf"),
-    PBold: require("./assets/fonts/PBold.ttf")
+    PBold: require("./assets/fonts/PBold.ttf"),
   });
-
 
   const popupRef = useRef(null);
   const Stack = createNativeStackNavigator();
-  if(!isLoaded){
+  if (!isLoaded) {
     return null;
   }
   return (
-    <ApplicationProvider {...eva} theme={eva.dark}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              title: "Welcome",
-              headerTintColor: "#fff",
-              headerTitleStyle: {
-                fontSize: 20,
-              },
-              headerShadowVisible: false,
-              headerStyle: {
-                backgroundColor: "#1f1f1f",
-              },
-              headerTitle: (props) => <HeaderComp />,
-            }}
-          />
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ApplicationProvider {...eva} theme={eva.dark}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                title: "Welcome",
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontSize: 20,
+                },
+                headerShadowVisible: false,
+                headerStyle: {
+                  backgroundColor: "#1f1f1f",
+                },
+                headerTitle: (props) => <HeaderComp />,
+              }}
+            />
 
-          <Stack.Screen name="Chart" component={ChartScreen} />
-          <Stack.Screen
-            name="AddIncome"
-            component={AddIncome}
-            options={{
-              title: "Add Income",
-              headerTintColor: "#fff",
-              headerTitleStyle: {
-                fontSize: 25,
-              },
-              headerShadowVisible: false,
-              headerStyle: {
-                backgroundColor: "#1f1f1f",
-              },
-            }}
-          />
-          <Stack.Screen
-            name="AddExpense"
-            component={AddExpense}
-            options={{
-              title: "Add Expense",
-              headerTintColor: "#fff",
-              headerTitleStyle: {
-                fontSize: 25,
-              },
-              headerShadowVisible: false,
-              headerStyle: {
-                backgroundColor: "#1f1f1f",
-              },
-            }}
-          />
-          <Stack.Screen
-            name="DetailsIncome"
-            component={DetailsIncome}
-            options={{
-              title: "Income Details",
-              headerTintColor: "#fff",
-              headerTitleStyle: {
-                fontSize: 25,
-              },
-              headerShadowVisible: false,
-              headerStyle: {
-                backgroundColor: "#1f1f1f",
-              },
-            }}
-          />
-          <Stack.Screen
-            name="DetailsExpense"
-            component={DetailsExpense}
-            options={{
-              title: "Expense Details",
-              headerTintColor: "#fff",
-              headerTitleStyle: {
-                fontSize: 25,
-              },
-              headerShadowVisible: false,
-              headerStyle: {
-                backgroundColor: "#1f1f1f",
-              },
-            }}
-          />
-          <Stack.Screen
-            name="EditIncome"
-            component={EditIncome}
-            options={{
-              title: "Edit Income",
-              headerTintColor: "#fff",
-              headerTitleStyle: {
-                fontSize: 25,
-              },
-              headerShadowVisible: false,
-              headerStyle: {
-                backgroundColor: "#1f1f1f",
-              },
-            }}
-          />
-          <Stack.Screen
-            name="EditExpense"
-            component={EditExpense}
-            options={{
-              title: "Edit Expense",
-              headerTintColor: "#fff",
-              headerTitleStyle: {
-                fontSize: 25,
-              },
-              headerShadowVisible: false,
-              headerStyle: {
-                backgroundColor: "#1f1f1f",
-              },
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ApplicationProvider>
+            <Stack.Screen
+              name="Chart"
+              component={DonutChartContainer}
+              options={{
+                title: "Financial Report",
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontSize: 25,
+                },
+                headerShadowVisible: false,
+                headerStyle: {
+                  backgroundColor: "#1f1f1f",
+                },
+              }}
+            />
+            <Stack.Screen
+              name="AddIncome"
+              component={AddIncome}
+              options={{
+                title: "Add Income",
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontSize: 25,
+                },
+                headerShadowVisible: false,
+                headerStyle: {
+                  backgroundColor: "#1f1f1f",
+                },
+              }}
+            />
+            <Stack.Screen
+              name="AddExpense"
+              component={AddExpense}
+              options={{
+                title: "Add Expense",
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontSize: 25,
+                },
+                headerShadowVisible: false,
+                headerStyle: {
+                  backgroundColor: "#1f1f1f",
+                },
+              }}
+            />
+            <Stack.Screen
+              name="DetailsIncome"
+              component={DetailsIncome}
+              options={{
+                title: "Income Details",
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontSize: 25,
+                },
+                headerShadowVisible: false,
+                headerStyle: {
+                  backgroundColor: "#1f1f1f",
+                },
+              }}
+            />
+            <Stack.Screen
+              name="DetailsExpense"
+              component={DetailsExpense}
+              options={{
+                title: "Expense Details",
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontSize: 25,
+                },
+                headerShadowVisible: false,
+                headerStyle: {
+                  backgroundColor: "#1f1f1f",
+                },
+              }}
+            />
+            <Stack.Screen
+              name="EditIncome"
+              component={EditIncome}
+              options={{
+                title: "Edit Income",
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontSize: 25,
+                },
+                headerShadowVisible: false,
+                headerStyle: {
+                  backgroundColor: "#1f1f1f",
+                },
+              }}
+            />
+            <Stack.Screen
+              name="EditExpense"
+              component={EditExpense}
+              options={{
+                title: "Edit Expense",
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontSize: 25,
+                },
+                headerShadowVisible: false,
+                headerStyle: {
+                  backgroundColor: "#1f1f1f",
+                },
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ApplicationProvider>
+    </GestureHandlerRootView>
   );
 }
 
@@ -190,12 +206,12 @@ const styles = StyleSheet.create({
   greeting: {
     // fontSize: 12,
     color: "white",
-    fontFamily: "PBold"
+    fontFamily: "PBold",
   },
   title: {
     // fontSize: 15,
     color: "white",
-    fontFamily: "PRegular"
+    fontFamily: "PRegular",
   },
   image: {
     marginRight: 10,
@@ -212,11 +228,11 @@ const styles = StyleSheet.create({
     borderRadius: 200,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    fontFamily: "PBold"
+    fontFamily: "PBold",
   },
   LogoText: {
     color: "white",
     fontSize: 18,
-    fontFamily: "PBold"
+    fontFamily: "PBold",
   },
 });

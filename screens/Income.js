@@ -66,7 +66,7 @@ const Income = (props) => {
 
   //this method gets the total income figure from the database and then displays it on the screen
   const getTotal = async ()=>{
-    await SELECT(doc(db, "totalIncome", "total"), (doc)=>{
+    SELECT(doc(db, "totalIncome", "total"), (doc)=>{
       setTotal(doc.data()?.total)
     })
   }

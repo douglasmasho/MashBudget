@@ -45,7 +45,7 @@ const Expense = (props) => {
        //the query specifies the specific document we want to get from our database, in this case we want the document with all the expenses
        const q = query(collection(db, "expense"), orderBy("time", "desc"));
        //the select method will then fetch the document specified by the query
-       SELECT(q, (querySnapshot) => {
+       await SELECT(q, (querySnapshot) => {
        setIsLoading(false);
          const expenses = [];
          querySnapshot.forEach((doc) => {

@@ -168,17 +168,18 @@ const styles = StyleSheet.create({
     fontFamily: "PRegular"
   },
   incomeItem: {
-    // backgroundColor: "green",
-    borderRadius: 20,
-    paddingHorizontal: 2,
-    paddingVertical: 5,
-    marginBottom: 10,
+    paddingHorizontal: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     flex: 1,
     width: "100%",
-    fontFamily: "PRegular"
+    fontFamily: "PRegular",
+    paddingVertical: 20,
+    marginBottom: 10,
+    backgroundColor: "#1f1f1f",
+    borderRadius: 20,
+    
   },
   details: {
     flexDirection: "column",
