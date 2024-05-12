@@ -20,7 +20,7 @@ const AddExpense = (props) => {
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  console.log("props", props);
+
 
   const animation = useRef(null);
   useEffect(() => {

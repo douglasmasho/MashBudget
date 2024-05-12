@@ -2,7 +2,6 @@ import { Text } from "@ui-kitten/components";
 import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import { Button } from "@ui-kitten/components";
-// import { Input } from "@ui-kitten/components";
 import { TextInput } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import {

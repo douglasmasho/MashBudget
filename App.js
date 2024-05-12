@@ -27,7 +27,7 @@ const HeaderComp = () => {
         />
         <View style={styles.leftTextContainer}>
           <Text style={styles.greeting}>Hi Douglas</Text>
-          <Text style={styles.title}>Monthly Budget</Text>
+          <Text style={styles.title}>Your Budget</Text>
         </View>
       </View>
 

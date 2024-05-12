@@ -37,7 +37,7 @@ const DonutPath = ({
   }, []);
 
   const end = useDerivedValue(() => {
-    console.log(decimals)
+
     if (index === decimals.value.length - 1) {
       return withTiming(1, { duration: 1000 });
     }
@@ -53,7 +53,7 @@ const DonutPath = ({
       duration: 1000,
     });
   }, []);
-  console.log("rendered")
+
   return (
     <Path
       path={path}

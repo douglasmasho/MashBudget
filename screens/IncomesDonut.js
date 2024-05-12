@@ -24,49 +24,65 @@ const OUTER_STROKE_WIDTH = 46;
 const GAP = 0.04;
 
 export const IncomeDonut = () => {
-  const n = 6;
+  const n = 20;
   const [data, setData] = useState([]);
   const totalValue = useSharedValue(0);
   const decimals = useSharedValue([]);
-  const colors = [ "#fe769c", "#46a0f8", "#c3f439", "#88dabc", "#e43433",
-  "#ff6f61", "#6b5b95", "#88b04b", "#f7cac9", "#92a8d1",
-  "#955251", "#b565a7", "#009473", "#e195b8", "#f4acb7",
-  "#6c5b7b", "#e06c9f", "#88b04b", "#ffa69e", "#ff847c"];
+  const colors = [
+    "#fe769c",
+    "#46a0f8",
+    "#c3f439",
+    "#88dabc",
+    "#e43433",
+    "#ff6f61",
+    "#6b5b95",
+    "#88b04b",
+    "#f7cac9",
+    "#92a8d1",
+    "#955251",
+    "#b565a7",
+    "#009473",
+    "#e195b8",
+    "#f4acb7",
+    "#6c5b7b",
+    "#e06c9f",
+    "#88b04b",
+    "#ffa69e",
+    "#ff847c",
+  ];
 
-  useEffect(()=>{
-    setTimeout(()=>{
+  useEffect(() => {
+    setTimeout(() => {
       getItems();
-
-    },500)
-  }, [])
+    }, 500);
+  }, []);
 
   const getItems = async () => {
-    const expenses = [];
+    const incomes = [];
     try {
-      //the query specifies the specific document we want to get from our database, in this case we want the document with all the expenses
+      //the query specifies the specific document we want to get from our database, in this case we want the document with all the income
       const q = query(collection(db, "income"), orderBy("time", "desc"));
       //the select method will then fetch the document specified by the query
 
       const querySnapshot = await SELECT(q);
 
       querySnapshot.forEach((doc) => {
-        expenses.push(doc.data());
-
+        incomes.push(doc.data());
       });
-
     } catch (e) {
       //this part catches any errors
       console.log(e);
     } finally {
-      console.log(expenses);
-      showData(expenses)
+      console.log(incomes);
+      showData(incomes);
     }
   };
 
-
   const showData = (data) => {
     const total = data.reduce(
-      (acc, currentValue) => acc + parseFloat(currentValue.amount),0);
+      (acc, currentValue) => acc + parseFloat(currentValue.amount),
+      0
+    );
     const generatePercentages = calculatePercentage(data, total);
     const generateDecimals = generatePercentages.map(
       (number) => Number(number.toFixed(0)) / 100
@@ -79,14 +95,14 @@ export const IncomeDonut = () => {
       percentage: generatePercentages[index],
       color: colors[index],
     }));
-    console.log(arrayOfObjects[0].data.name)
+    console.log(arrayOfObjects[0].data.name);
     setData(arrayOfObjects);
   };
 
   const font = useFont(require("../assets/fonts/PRegular.ttf"), 60);
   const smallFont = useFont(require("../assets/fonts/PRegular.ttf"), 25);
 
-  //this method collects all the expenses from the database, it also listens to any changes made to the expenses records. So if any change happens, it will fetch the updated list and then display the list on the screen.
+  //this method collects all the incomes from the database, it also listens to any changes made to the incomes records. So if any change happens, it will fetch the updated list and then display the list on the screen.
 
   if (!font || !smallFont) {
     return <View />;
@@ -94,27 +110,35 @@ export const IncomeDonut = () => {
 
   return (
     <View style={styles.container}>
-
-        <Text style={styles.header}>Your Income</Text>
-        <View style={styles.chartContainer}>
-          <DonutChart
-            radius={RADIUS}
-            gap={GAP}
-            strokeWidth={STROKE_WIDTH}
-            outerStrokeWidth={OUTER_STROKE_WIDTH}
-            font={font}
-            smallFont={smallFont}
-            totalValue={totalValue}
-            n={n}
-            decimals={decimals}
-            colors={colors}
+      <Text style={styles.header}>Your Income</Text>
+      <View style={styles.chartContainer}>
+        <DonutChart
+          showTitle={true}
+          radius={RADIUS}
+          gap={GAP}
+          strokeWidth={STROKE_WIDTH}
+          outerStrokeWidth={OUTER_STROKE_WIDTH}
+          font={font}
+          smallFont={smallFont}
+          totalValue={totalValue}
+          n={n}
+          decimals={decimals}
+          colors={colors}
+          title={"Total Earned"}
+        />
+      </View>
+      {data.map((item, index) => {
+        console.log(item.data.name);
+        return (
+          <RenderItem
+            item={item}
+            key={index}
+            index={index}
+            name={item.data.name}
+            amount={item.data.amount}
           />
-        </View>
-        {data.map((item, index) => {
-          console.log(item.data.name)
-          return <RenderItem item={item} key={index} index={index} name={item.data.name} amount={item.data.amount}/>;
-        })}
-
+        );
+      })}
     </View>
   );
 };
@@ -135,7 +159,7 @@ const styles = StyleSheet.create({
     width: RADIUS * 2,
     height: RADIUS * 2,
     marginTop: 10,
-    marginBottom: 25
+    marginBottom: 25,
   },
   button: {
     marginVertical: 40,

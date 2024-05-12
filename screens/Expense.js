@@ -1,13 +1,14 @@
 /**
  * This code handles the expenses screen and its functionality
+ * Author: Douglas Mashonganyika https://github.com/douglasmasho/MashBudget
  * 
  */
 
 //this part imports all the dependencies needed for the screen to function 
 import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import { Text, Button } from "@ui-kitten/components";
-import Incomeitem from "../components/Incomeitem";
+import { Text, Button, Icon, IconElement } from "@ui-kitten/components";
+
 import {
   db,
   doc,
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
   headerAmount: {
     fontSize: 22,
     fontWeight: 600,
-    color: "#66B6FF",
+    color: "#FF8282",
     fontFamily: "PRegular"
 
   },

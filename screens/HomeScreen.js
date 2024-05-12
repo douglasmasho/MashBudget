@@ -14,30 +14,9 @@ import {
   onSnapshot as SELECT,
   query,
 } from "../Config";
-import LottieView from "lottie-react-native";
-import MyPieChart from "../components/MyPieChart";
-import { BarChart, LineChart, PieChart, PopulationPyramid } from "react-native-gifted-charts";
+import BalanceDonut from "./BalanceDonut";
 
 
-const data=[ {
-  value: 47,
-  color: '#009FFF',
-  gradientCenterColor: '#006DFF',
-},
-{value: 10, color: '#93FCF8', gradientCenterColor: '#3BE9DE'},
-{value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3'},
-{value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'}, ]
-
-const chartConfig = {
-  backgroundGradientFrom: "#1E2923",
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: "#08130D",
-  backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-  strokeWidth: 2, // optional, default 3
-  barPercentage: 0.5,
-  useShadowColorFromDataset: false // optional
-};
 //this code handles the formatting of the money so it displays with commas and 2 decimal places
 const { FormatMoney } = require("format-money-js");
 const fm = new FormatMoney({
@@ -67,7 +46,6 @@ const TabNavigator = () => (
 const HomeScreen = (props) => {
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
-  useEffect(() => {}, []);
 
   //this method gets the total income figure from the database and then displays it on the screen
   const getTotalIncome = async () => {
@@ -92,13 +70,26 @@ const HomeScreen = (props) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.middle}>
         <TouchableOpacity onPress={()=>{props.navigation.navigate("Chart")}}>
-              <PieChart  donut innerCircleColor="#1f1f1f" radius={70} data={data} />
+              {/* <PieChart  donut innerCircleColor="#1f1f1f" radius={70} data={data} /> */}
+              <BalanceDonut/>
         </TouchableOpacity>
         <View style={styles.inner}>
           <Text>Your Balance</Text>
           <Text style={styles.headerAmount}>
             {fm.from(totalIncome - totalExpense, { symbol: "N$" })}
           </Text>
+          <View>
+            <View style={styles.row}>
+              <View style={[styles.colordot, styles.marginRight,{backgroundColor: "#46a0f8"}]}></View>
+               <Text style={styles.marginRight}>Income</Text>
+               <Text>{(totalIncome / (totalIncome + totalExpense) * 100).toFixed(0)}%</Text>
+            </View>
+            <View style={styles.row}>
+              <View style={[styles.colordot, styles.marginRight,{backgroundColor: "#E00000"}]}></View>
+               <Text style={styles.marginRight}>Expenses</Text>
+               <Text>{(totalExpense / (totalIncome + totalExpense) * 100).toFixed(0)}%</Text>
+            </View>
+          </View>
         </View>
       </View>
       <TabNavigator />
@@ -107,6 +98,18 @@ const HomeScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
+  marginRight: {
+    marginRight: 5
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  colordot: {
+    width: 10,
+    height: 10,
+    borderRadius: 10,
+  },
   inner: {
     marginLeft: 10
   },
@@ -119,10 +122,12 @@ const styles = StyleSheet.create({
   },
   middle: {
     paddingHorizontal: 20,
-    paddingVertical: 30,
+    paddingTop: 20,
+    paddingBottom: 60,
     backgroundColor: "#1f1f1f",
     flexDirection: "row",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
+    alignItems: "center"
   },
   headerAmount: {
     fontSize: 30,

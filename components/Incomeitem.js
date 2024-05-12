@@ -105,8 +105,8 @@ const Incomeitem = ({ name, amount, description, time, navigation, id }) => {
                 })
               }
             >
-              <View>
-                <Divider style={styles.divider2} />
+              <View style={styles.option}>
+          
                 <Text style={styles.text}>View Details</Text>
               </View>
             </TouchableOpacity>
@@ -120,16 +120,16 @@ const Incomeitem = ({ name, amount, description, time, navigation, id }) => {
                 })
               }
             >
-              <View>
-                <Divider style={styles.divider2} />
+              <View style={styles.option}>
+                
                 <Text style={styles.text}>Edit</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={deleteIncome}>
-              <View>
-                <Divider style={styles.divider2} />
+              <View style={styles.option}>
+              
                 <Text style={[styles.text, styles.redText]}>Delete</Text>
-                <Divider style={styles.divider2} />
+              
               </View>
             </TouchableOpacity>
           </View>
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     fontFamily: "PRegular",
     paddingVertical: 20,
     marginBottom: 10,
-    backgroundColor: "#1f1f1f",
+    backgroundColor: "#06092F",
     borderRadius: 20,
     
   },
@@ -215,6 +215,18 @@ const styles = StyleSheet.create({
     flex: 0,
     backgroundColor: "#1f1f1f",
   },
+  option: {
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    paddingVertical: 20,
+    marginBottom: 10,
+    color: "white",
+    backgroundColor: "#1a1a1a",
+    borderRadius: 20,
+  }
 });
 
 export default Incomeitem;

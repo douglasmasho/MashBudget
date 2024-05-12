@@ -1,9 +1,8 @@
+
 import React, { useRef, useState, useEffect } from "react";
 import { StyleSheet, View, TouchableOpacity, Modal } from "react-native";
 import { Text, Divider } from "@ui-kitten/components";
 import moment from "moment";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ActionSheet from "react-native-actions-sheet";
 import {
   db,
@@ -168,7 +167,7 @@ const styles = StyleSheet.create({
     fontFamily: "PRegular"
   },
   expenseItem: {
-       paddingHorizontal: 10,
+    paddingHorizontal: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -177,7 +176,7 @@ const styles = StyleSheet.create({
     fontFamily: "PRegular",
     paddingVertical: 20,
     marginBottom: 10,
-    backgroundColor: "#1f1f1f",
+    backgroundColor: "#290000",
     borderRadius: 20,
 
   },

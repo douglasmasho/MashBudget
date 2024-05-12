@@ -15,16 +15,18 @@ const DonutChart = ({
   radius,
   font,
   smallFont,
+  title,
+  showTitle,
 }) => {
   const array = Array.from({ length: 8 });
-  console.log(array)
+
   const innerRadius = radius - outerStrokeWidth / 2;
 
   const path = Skia.Path.Make();
   path.addCircle(radius, radius, innerRadius);
 
   const targetText = useDerivedValue(
-    () => `$${Math.round(totalValue.value)}`,
+    () => `N$${Math.round(totalValue.value)}`,
     []
   );
 
@@ -50,7 +52,7 @@ const DonutChart = ({
           end={1}
         />
         {array.map((_, index) => {
-          console.log(index)
+
           return (
             <DonutPath
               key={index}
@@ -64,20 +66,24 @@ const DonutChart = ({
             />
           );
         })}
-        <Text
-          x={radius - smallFontSize.width / 2}
-          y={radius + smallFontSize.height / 2 - fontSize.height / 1.2}
-          text={"Total Spent"}
-          font={smallFont}
-          color="white"
-        />
-        <Text
-          x={textX}
-          y={radius + fontSize.height / 2}
-          text={targetText}
-          font={font}
-          color="white"
-        />
+        {showTitle ? (
+          <>
+            <Text
+              x={radius - smallFontSize.width / 2}
+              y={radius + smallFontSize.height / 2 - fontSize.height / 1.2}
+              text={title}
+              font={smallFont}
+              color="white"
+            />
+            <Text
+              x={textX}
+              y={radius + fontSize.height / 2}
+              text={targetText}
+              font={font}
+              color="white"
+            />
+          </>
+        ) : null}
       </Canvas>
     </View>
   );
