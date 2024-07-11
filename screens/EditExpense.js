@@ -1,36 +1,41 @@
+/**
+ * This code handles the details screen that allows the user to edit an expense.
+ * There will be inputs, that will be filled with the current values, but they can change the values to what they like.
+ * Once done they can click on edit and the UPDATE function will change the value of that specific expense on the database.
+ * The SELECT is also used to update the total expense once the individual expense item was edited.
+ * Author: Douglas Mashonganyika https://github.com/douglasmasho/MashBudget
+ */
+
 import { Text } from "@ui-kitten/components";
 import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import { Button } from "@ui-kitten/components";
-// import { Input } from "@ui-kitten/components";
 import { TextInput } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import {
-  db,
-  doc,
-  setDoc as UPDATE,
-  getDoc as SELECT,
-} from "../Config";
+import { db, doc, setDoc as UPDATE, getDoc as SELECT } from "../Config";
 import LottieView from "lottie-react-native";
 
 const EditExpense = (props) => {
+  // State variables for expense details
   const [name, setName] = useState(props.route.params.name);
   const [amount, setAmount] = useState(props.route.params.amount);
   const [description, setDescription] = useState(
     props.route.params.description
   );
   const [isLoading, setIsLoading] = useState(false);
-  console.log(props.route.params.id);
 
+  // Ref for animation
   const animation = useRef(null);
-  useEffect(() => {
 
+  // Auto play animation on mount
+  useEffect(() => {
     animation.current?.play();
   }, []);
-  // add new item
+
+  // Function to edit expense item
   const addItem = async () => {
     setIsLoading(true);
     try {
+      // Update expense item in database
       await UPDATE(doc(db, "expense", props.route.params.id), {
         name,
         amount,
@@ -38,10 +43,16 @@ const EditExpense = (props) => {
         time: Date.now(),
         id: props.route.params.id,
       });
+
+      // Fetch total expense from database
       const docSnap = await SELECT(doc(db, "totalExpense", "total"));
 
       if (docSnap.exists()) {
-        const difference = parseFloat(amount) - parseFloat(props.route.params.amount);
+        // Calculate difference in amount
+        const difference =
+          parseFloat(amount) - parseFloat(props.route.params.amount);
+
+        // Update total expense in database
         await UPDATE(doc(db, "totalExpense", "total"), {
           total: docSnap.data().total + difference,
         });
@@ -60,6 +71,7 @@ const EditExpense = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       {isLoading ? (
+        // Render loading animation while updating
         <View style={styles.animationContainer}>
           <LottieView
             autoPlay
@@ -68,11 +80,11 @@ const EditExpense = (props) => {
               width: 200,
               height: 200,
             }}
-
             source={require("../assets/loading.json")}
           />
         </View>
       ) : (
+        // Render form to edit expense details
         <>
           <Text style={styles.label}>Change Name</Text>
           <TextInput
@@ -137,9 +149,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     display: "flex",
     alignItems: "center",
-  },
-  icon: {
-    marginRight: 30,
   },
   animationContainer: {
     alignItems: "center",

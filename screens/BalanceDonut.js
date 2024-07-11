@@ -1,68 +1,69 @@
-/* eslint-disable react-native/no-inline-styles */
+/**
+ * This code handles the donut chart that shows your balance. What percentage is made up of income and what percentage is made up of expenses
+ * Author: Douglas Mashonganyika https://github.com/douglasmasho/MashBudget
+ */
+
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import DonutChart from "../components/DonutChart";
 import { useFont } from "@shopify/react-native-skia";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSharedValue, withTiming } from "react-native-reanimated";
-import { calculatePercentage, calculatePercentage2 } from "../utils/CalculatePercentage";
-import { generateRandomNumbers } from "../utils/generateRandomNumbers";
-import RenderItem from "../components/RenderItem";
-import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  db,
-  doc,
-  orderBy,
-  collection,
-  onSnapshot as SELECT,
-  query,
-} from "../Config";
-// This data handles how the donut chart looks like
+import { calculatePercentage2 } from "../utils/CalculatePercentage";
+
+import { db, doc, onSnapshot as SELECT } from "../Config";
+
+// Constants for donut chart configuration
 const RADIUS = 50;
 const STROKE_WIDTH = 10;
 const OUTER_STROKE_WIDTH = 30;
 const GAP = 0.04;
 
 export const BalanceDonut = () => {
+  // Number of elements for the donut chart
   const n = 20;
+
+  // State variables
   const [data, setData] = useState([]);
   const totalValue = useSharedValue(0);
   const decimals = useSharedValue([]);
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
-  const colors = [  "#46a0f8", "#E00000", "#c3f439", "#88dabc", "#e43433",
-  "#ff6f61", "#6b5b95", "#88b04b", "#f7cac9", "#92a8d1",
-  "#955251", "#b565a7", "#009473", "#e195b8", "#f4acb7",
-  "#6c5b7b", "#e06c9f", "#88b04b", "#ffa69e", "#ff847c"];
 
-  useEffect(()=>{
-    setTimeout(()=>{
+  // Colors for the donut chart
+  const colors = ["#46a0f8", "#E00000"];
+
+  useEffect(() => {
+    // Fetch income and expense data after a delay
+    setTimeout(() => {
       getItems();
+    }, 500);
+  }, [incomes, expenses]);
 
-    },500)
-  }, [incomes, expenses])
-
+  // Fetch income and expense data from the database
   const getItems = async () => {
     try {
-       //the select method will then fetch the document specified by the query
-       SELECT(doc(db, "totalIncome", "total"), (doc)=>{
-        setIncomes(doc.data()?.total)
-      })
-      SELECT(doc(db, "totalExpense", "total"), (doc)=>{
-        setExpenses(doc.data()?.total)
-      })
+      // Fetch total income
+      SELECT(doc(db, "totalIncome", "total"), (doc) => {
+        setIncomes(doc.data()?.total);
+      });
+
+      // Fetch total expense
+      SELECT(doc(db, "totalExpense", "total"), (doc) => {
+        setExpenses(doc.data()?.total);
+      });
     } catch (e) {
-      //this part catches any errors
       console.log(e);
     } finally {
-      showData([incomes, expenses])
+      showData([incomes, expenses]);
     }
   };
 
-
+  // Process and display data for the donut chart
   const showData = (data) => {
     const total = data.reduce(
-      (acc, currentValue) => acc + parseFloat(currentValue),0);
+      (acc, currentValue) => acc + parseFloat(currentValue),
+      0
+    );
     const generatePercentages = calculatePercentage2(data, total);
     const generateDecimals = generatePercentages.map(
       (number) => Number(number.toFixed(0)) / 100
@@ -74,59 +75,58 @@ export const BalanceDonut = () => {
       percentage: generatePercentages[index],
       color: colors[index],
     }));
-    console.log(arrayOfObjects[0].data.name)
+    console.log(arrayOfObjects[0].data.name);
     setData(arrayOfObjects);
   };
 
+  // Load custom fonts
   const font = useFont(require("../assets/fonts/PRegular.ttf"), 60);
   const smallFont = useFont(require("../assets/fonts/PRegular.ttf"), 25);
 
-  //this method collects all the expenses from the database, it also listens to any changes made to the expenses records. So if any change happens, it will fetch the updated list and then display the list on the screen.
-
+  // Return loading view if fonts are not yet loaded
   if (!font || !smallFont) {
     return <View />;
   }
 
+  // Render the component
   return (
     <View style={styles.container}>
-        <View style={styles.chartContainer}>
-          <DonutChart
+      <View style={styles.chartContainer}>
+        <DonutChart
           showTitle={false}
-            radius={RADIUS}
-            gap={GAP}
-            strokeWidth={STROKE_WIDTH}
-            outerStrokeWidth={OUTER_STROKE_WIDTH}
-            font={font}
-            smallFont={smallFont}
-            totalValue={totalValue}
-            n={n}
-            decimals={decimals}
-            colors={colors}
-            title={"Total Earned"}
-          />
-        </View>
+          radius={RADIUS}
+          gap={GAP}
+          strokeWidth={STROKE_WIDTH}
+          outerStrokeWidth={OUTER_STROKE_WIDTH}
+          font={font}
+          smallFont={smallFont}
+          totalValue={totalValue}
+          n={n}
+          decimals={decimals}
+          colors={colors}
+          title={"Total Earned"}
+        />
+      </View>
     </View>
   );
 };
 
+// Styles for the component
 const styles = StyleSheet.create({
-    
   header: {
     fontSize: 30,
     color: "#66B6FF",
     textAlign: "center",
-    // fontWeight: "600",
     fontFamily: "PBold",
   },
   container: {
     flex: 1,
-    // backgroundColor: "#1a1a1a",
   },
   chartContainer: {
     width: RADIUS * 2,
     height: RADIUS * 2,
     marginTop: 10,
-    marginBottom: 25
+    marginBottom: 25,
   },
   button: {
     marginVertical: 40,

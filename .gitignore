@@ -1,4 +1,5 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# This code shows the packages and files that should be ignored when pushing to github
+#Author: Auto generated
 
 # dependencies
 node_modules/

@@ -1,35 +1,46 @@
+/**
+ * This component handles the screen where the user can input details of their income and then add them to the database.
+ * It collects the user input and uses INSERT to add data to the database and SELECT to get the previous total incomes and then increase it when the new income has been added
+ * Author: Douglas Mashonganyika https://github.com/douglasmasho/MashBudget
+ */
+
 import { Text } from "@ui-kitten/components";
 import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import { Button } from "@ui-kitten/components";
 import { TextInput } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 import {
   db,
   doc,
   setDoc as INSERT,
-  collection,
   getDoc as SELECT,
 } from "../Config";
 import uuid from "react-native-uuid";
 import LottieView from "lottie-react-native";
 
 const AddIncome = (props) => {
-  const [name, setName] = useState("");
-  const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  // State variables to manage user input and loading state
+  const [name, setName] = useState(""); // Name of the income
+  const [amount, setAmount] = useState(""); // Amount of the income
+  const [description, setDescription] = useState(""); // Description of the income
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+
   console.log("props", props);
 
+  // Ref for Lottie animation
   const animation = useRef(null);
+
+  // Effect hook to play animation on mount
   useEffect(() => {
     animation.current?.play();
   }, []);
-  // add new item
+
+  // Method to add a new income
   const addItem = async () => {
     setIsLoading(true);
     try {
       const id = uuid.v4();
+      // Inserting new income data into the database
       await INSERT(doc(db, "income", id), {
         name,
         amount,
@@ -37,9 +48,11 @@ const AddIncome = (props) => {
         time: Date.now(),
         id,
       });
+      // Retrieving previous total income
       const docSnap = await SELECT(doc(db, "totalIncome", "total"));
 
       if (docSnap.exists()) {
+        // Updating total income in the database
         await INSERT(doc(db, "totalIncome", "total"), {
           total: docSnap.data().total + parseFloat(amount),
         });
@@ -55,9 +68,11 @@ const AddIncome = (props) => {
     }
   };
 
+  // Rendering the component
   return (
     <SafeAreaView style={styles.container}>
       {isLoading ? (
+        // Loading animation view
         <View style={styles.animationContainer}>
           <LottieView
             autoPlay
@@ -70,6 +85,7 @@ const AddIncome = (props) => {
           />
         </View>
       ) : (
+        // Input fields and button for adding income
         <>
           <Text style={styles.label}>Name</Text>
           <TextInput
@@ -109,6 +125,7 @@ const AddIncome = (props) => {
   );
 };
 
+// Styles for the component
 const styles = StyleSheet.create({
   label: {
     marginBottom: 5,

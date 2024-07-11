@@ -1,36 +1,40 @@
+/**
+ * This component handles the screen where the user can input details of their expense and then add them to the database.
+ * It collects the user input and uses INSERT to add data to the database and SELECT to get the previous total expenses and then increase it when the new expense has been added
+ * Author: Douglas Mashonganyika https://github.com/douglasmasho/MashBudget
+ */
+
+// Importing necessary modules and components
 import { Text } from "@ui-kitten/components";
 import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import { Button } from "@ui-kitten/components";
-// import { Input } from "@ui-kitten/components";
 import { TextInput } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import {
-  db,
-  doc,
-  setDoc as INSERT,
-  collection,
-  getDoc as SELECT,
-} from "../Config";
+import { db, doc, setDoc as INSERT, getDoc as SELECT } from "../Config";
 import uuid from "react-native-uuid";
 import LottieView from "lottie-react-native";
 
+// AddExpense component
 const AddExpense = (props) => {
+  // State variables to manage user input and loading state
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-
+  // Ref for Lottie animation
   const animation = useRef(null);
+  // Effect hook to play animation on mount
   useEffect(() => {
     animation.current?.play();
   }, []);
-  // add new item
+
+  // Function to add a new expense
   const addItem = async () => {
     setIsLoading(true);
     try {
       const id = uuid.v4();
+      // Inserting new expense data into the database
       await INSERT(doc(db, "expense", id), {
         name,
         amount,
@@ -38,9 +42,11 @@ const AddExpense = (props) => {
         time: Date.now(),
         id,
       });
+      // Retrieving previous total expense
       const docSnap = await SELECT(doc(db, "totalExpense", "total"));
 
       if (docSnap.exists()) {
+        // Updating total expense in the database
         await INSERT(doc(db, "totalExpense", "total"), {
           total: docSnap.data().total + parseFloat(amount),
         });
@@ -56,6 +62,7 @@ const AddExpense = (props) => {
     }
   };
 
+  // Rendering the component
   return (
     <SafeAreaView style={styles.container}>
       {isLoading ? (
@@ -110,6 +117,7 @@ const AddExpense = (props) => {
   );
 };
 
+// Styles for the component
 const styles = StyleSheet.create({
   label: {
     marginBottom: 5,

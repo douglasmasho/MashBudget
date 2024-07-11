@@ -1,83 +1,56 @@
-/* eslint-disable react-native/no-inline-styles */
+/**
+ * This code shows the donut of the incomes and displays the percentage of total income that each individual income represents
+ * Author: Douglas Mashonganyika https://github.com/douglasmasho/MashBudget
+ */
+
+// Importing necessary dependencies
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import DonutChart from "../components/DonutChart";
-import { useFont } from "@shopify/react-native-skia";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { useSharedValue, withTiming } from "react-native-reanimated";
-import { calculatePercentage } from "../utils/CalculatePercentage";
-import { generateRandomNumbers } from "../utils/generateRandomNumbers";
-import RenderItem from "../components/RenderItem";
-import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  db,
-  doc,
-  orderBy,
-  collection,
-  getDocs as SELECT,
-  query,
-} from "../Config";
-// This data handles how the donut chart looks like
+import { StyleSheet, Text, View } from "react-native";
+import DonutChart from "../components/DonutChart"; // Importing DonutChart component
+import { useFont } from "@shopify/react-native-skia"; // Importing font utility
+import { useSharedValue, withTiming } from "react-native-reanimated"; // Reanimated library for animations
+import { calculatePercentage } from "../utils/CalculatePercentage"; // Utility function for calculating percentages
+import RenderItem from "../components/RenderItem"; // Importing RenderItem component
+import { db, orderBy, collection, getDocs as SELECT, query } from "../Config"; // Database and query utilities
+
+// Constants for donut chart styling
 const RADIUS = 160;
 const STROKE_WIDTH = 30;
 const OUTER_STROKE_WIDTH = 46;
 const GAP = 0.04;
 
+// IncomeDonut component
 export const IncomeDonut = () => {
-  const n = 20;
-  const [data, setData] = useState([]);
-  const totalValue = useSharedValue(0);
-  const decimals = useSharedValue([]);
-  const colors = [
-    "#fe769c",
-    "#46a0f8",
-    "#c3f439",
-    "#88dabc",
-    "#e43433",
-    "#ff6f61",
-    "#6b5b95",
-    "#88b04b",
-    "#f7cac9",
-    "#92a8d1",
-    "#955251",
-    "#b565a7",
-    "#009473",
-    "#e195b8",
-    "#f4acb7",
-    "#6c5b7b",
-    "#e06c9f",
-    "#88b04b",
-    "#ffa69e",
-    "#ff847c",
-  ];
+  const n = 20; // Number of sections in the donut chart
+  const [data, setData] = useState([]); // State for income data
+  const totalValue = useSharedValue(0); // Shared value for total income
+  const decimals = useSharedValue([]); // Shared value for percentage decimals
+  const colors = [ /* Array of colors for chart sections */ ];
 
+  // Fetch income data when component mounts
   useEffect(() => {
     setTimeout(() => {
       getItems();
     }, 500);
   }, []);
 
+  // Function to fetch income data from database
   const getItems = async () => {
     const incomes = [];
     try {
-      //the query specifies the specific document we want to get from our database, in this case we want the document with all the income
       const q = query(collection(db, "income"), orderBy("time", "desc"));
-      //the select method will then fetch the document specified by the query
-
       const querySnapshot = await SELECT(q);
-
       querySnapshot.forEach((doc) => {
         incomes.push(doc.data());
       });
     } catch (e) {
-      //this part catches any errors
-      console.log(e);
+      console.log(e); // Log any errors
     } finally {
-      console.log(incomes);
       showData(incomes);
     }
   };
 
+  // Function to process and display income data
   const showData = (data) => {
     const total = data.reduce(
       (acc, currentValue) => acc + parseFloat(currentValue.amount),
@@ -95,23 +68,24 @@ export const IncomeDonut = () => {
       percentage: generatePercentages[index],
       color: colors[index],
     }));
-    console.log(arrayOfObjects[0].data.name);
     setData(arrayOfObjects);
   };
 
+  // Loading fonts
   const font = useFont(require("../assets/fonts/PRegular.ttf"), 60);
   const smallFont = useFont(require("../assets/fonts/PRegular.ttf"), 25);
 
-  //this method collects all the incomes from the database, it also listens to any changes made to the incomes records. So if any change happens, it will fetch the updated list and then display the list on the screen.
-
+  // Return empty view if fonts are not loaded
   if (!font || !smallFont) {
     return <View />;
   }
 
+  // Render IncomeDonut component
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Your Income</Text>
       <View style={styles.chartContainer}>
+        {/* Donut chart component */}
         <DonutChart
           showTitle={true}
           radius={RADIUS}
@@ -127,8 +101,8 @@ export const IncomeDonut = () => {
           title={"Total Earned"}
         />
       </View>
+      {/* Render individual income items */}
       {data.map((item, index) => {
-        console.log(item.data.name);
         return (
           <RenderItem
             item={item}
@@ -143,12 +117,12 @@ export const IncomeDonut = () => {
   );
 };
 
+// Styles for the component
 const styles = StyleSheet.create({
   header: {
     fontSize: 30,
     color: "#66B6FF",
     textAlign: "center",
-    // fontWeight: "600",
     fontFamily: "PBold",
   },
   container: {
@@ -160,17 +134,6 @@ const styles = StyleSheet.create({
     height: RADIUS * 2,
     marginTop: 10,
     marginBottom: 25,
-  },
-  button: {
-    marginVertical: 40,
-    backgroundColor: "#f4f7fc",
-    paddingHorizontal: 60,
-    paddingVertical: 15,
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: "black",
-    fontSize: 20,
   },
 });
 

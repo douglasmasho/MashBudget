@@ -1,3 +1,7 @@
+/**
+ * This code handles the firebase configuration which connects the app to our database
+ * Author: Douglas Mashonganyika https://github.com/douglasmasho/MashBudget
+ */
 import { initializeApp } from "firebase/app";
 import {
   initializeFirestore,
