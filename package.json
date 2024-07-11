@@ -45,7 +45,9 @@
     "react-native-svg-charts": "^5.4.0",
     "react-native-tab-view": "^3.5.2",
     "react-native-uuid": "^2.0.2",
-    "react-navigation-tabs": "^2.11.2"
+    "react-navigation-tabs": "^2.11.2",
+    "react-native-web": "~0.19.6",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -7,7 +7,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Text, Button } from "@ui-kitten/components";
-import IncomeItem from "../components/IncomeItem"; // Importing the IncomeItem component
+import IncomeItem from "../components/Incomeitem"; // Importing the IncomeItem component
 import {
   db,
   doc,
