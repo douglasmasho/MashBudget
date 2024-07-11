@@ -7,7 +7,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Text, Button } from "@ui-kitten/components";
-import { db, collection, orderBy, onSnapshot as SELECT, query } from "../Config";
+import { db, collection, orderBy, onSnapshot as SELECT, query, doc } from "../Config";
 import LottieView from "lottie-react-native";
 import ExpenseItem from "../components/ExpenseItem";
 
@@ -47,6 +47,7 @@ const Expense = (props) => {
    // Get the total expense from the database
    const getTotal = async () => {
      await SELECT(doc(db, "totalExpense", "total"), (doc) => {
+      console.log(doc.data()?.total)
        setTotal(doc.data()?.total)
      })
    }

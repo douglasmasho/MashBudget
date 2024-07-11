@@ -25,7 +25,28 @@ export const IncomeDonut = () => {
   const [data, setData] = useState([]); // State for income data
   const totalValue = useSharedValue(0); // Shared value for total income
   const decimals = useSharedValue([]); // Shared value for percentage decimals
-  const colors = [ /* Array of colors for chart sections */ ];
+  const colors = [
+    "#fe769c",
+    "#46a0f8",
+    "#c3f439",
+    "#88dabc",
+    "#e43433",
+    "#ff6f61",
+    "#6b5b95",
+    "#88b04b",
+    "#f7cac9",
+    "#92a8d1",
+    "#955251",
+    "#b565a7",
+    "#009473",
+    "#e195b8",
+    "#f4acb7",
+    "#6c5b7b",
+    "#e06c9f",
+    "#88b04b",
+    "#ffa69e",
+    "#ff847c",
+  ];
 
   // Fetch income data when component mounts
   useEffect(() => {
